@@ -1,4 +1,4 @@
-# zeitmanagmentv2
+# Zeitmanagment
 
 ## Project setup
 ```

@@ -2,7 +2,6 @@ import { createApp } from 'vue'
 import App from './App.vue'
 // import mysql from "mysql"
 
-
 import {createRouter, createWebHistory} from 'vue-router'
 import login from "@/components/Login";
 import fpassword from "@/components/fpassword";
@@ -27,7 +26,7 @@ const routes = [
     {path: '/login', component: login, name:'login'},
     {path: '/Home',beforeEnter: checkLogin, component: home, name:'home'},
     {path: '/Login/reset', component: fpassword, name:'reset'},
-    { path: '/:pathMatch(.*)*', name: 'NotFound', component: login},
+    { path: '/:pathMatch(.*)*', component: login, name: 'NotFound'},
 
 
 ];

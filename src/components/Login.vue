@@ -1,16 +1,16 @@
 <template>
   <div class="login">
     <h1>Login</h1>
-    <form >
+    <form @submit.prevent="login">
       <label for="username">
         <!-- font awesome icon -->
         <i class="fas fa-user"></i>
       </label>
-      <input type="text" name="username" placeholder="E-Mail" id="username" required>
+      <input type="text" v-model="email" name="username" placeholder="E-Mail" id="username" required>
       <label for="password">
         <i class="fas fa-lock"></i>
       </label>
-      <input type="password" name="password" placeholder="Password" id="password" required>
+      <input type="password" v-model="password"  name="password" placeholder="Password" id="password" required>
       <div class="form-group">
       <button class="btn btn-primary btn-block btn-lg">Anmelden</button>
       </div>
@@ -22,10 +22,64 @@
 </template>
 
 <script>
+
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: "Login"
+  name: "Login",
+  data() {
+    return {
+      email: '',
+      password: '',
+    }
+  },
+  methods: {
+    login() {
+      const data = {
+        email: this.email,
+        password: this.password
+      }
+
+      let id = null;
+
+      // if - (code hinterlegt, frage ab ob code in der Datenbanbk existiert.) {
+      //   code Exist Loge usere autmoatich ein. }
+      //  -- else loge usere anhand der Login Daten ein.
+      //  if - Usere existieret
+      //  -- if:
+
+
+      // if -
+      // wurde Usere gefunde loge eine und
+
+
+      if (localStorage.getItem("logtin") === null) {
+        // eslint-disable-next-line no-unused-vars
+        id = Math.random().toString(36).substr(2, 9);
+
+        localStorage.logtin = id
+      }
+
+      this.$router.push("home")
+      console.log(data)
+    }
+  }
 }
+
+/*connection.query('SELECT * FROM accounts WHERE username = ? AND password = ?', [username, password], function(error, results) {
+    // If there is an issue with the query, output the error
+    if (error) throw error;
+    // If the account exists
+    if (results.length > 0) {
+        // Authenticate the user
+        request.session.loggedin = true;
+        request.session.username = username;
+        // Redirect to home page
+        response.redirect('/home');
+    } else {
+        response.send('Incorrect Username and/or Password!');
+    }
+    response.end();
+}); */
 </script>
 
 <style scoped>

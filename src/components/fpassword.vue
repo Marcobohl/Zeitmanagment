@@ -50,6 +50,11 @@ export default {
 
   font-size: 13px;
   justify-content: center;
+  height: 50px;
+}
+
+.form-group {
+  margin-bottom: 20px;
 }
 
 .btn-primary {

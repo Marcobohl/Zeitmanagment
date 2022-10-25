@@ -95,6 +95,10 @@ export default {
 background-color: #003fb9;
 }
 
+.form-group {
+  margin-bottom: 20px;
+}
+
 .modal-footer {
   background: #ecf0f1;
   border-color: #dee4e7;
@@ -102,6 +106,7 @@ background-color: #003fb9;
 
   font-size: 13px;
   justify-content: center;
+  height: 50px;
 }
 
 .login {

@@ -32,7 +32,6 @@ const routes = [
     {path: '/Home',beforeEnter: checkLogin, component: home, name:'home'},
     {path: '/Login/reset', component: fpassword, name:'reset'},
     {path: '/:pathMatch(.*)*', component: login, name: 'NotFound'},
-
 ];
 
 

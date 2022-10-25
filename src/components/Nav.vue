@@ -31,11 +31,11 @@ export default {
 }
 </script>
 <style scoped>
+
 .btn-secondary {
   border-color: #3274d6;
   background-color: #3274d6;
 }
-
 .btn.show {
   border-color: #3274d6;
   background-color: #3274d6;
@@ -44,6 +44,12 @@ export default {
 .btn:hover {
   border-color: #284e82;
   background-color: #284e82;
+}
+
+.dropdown-menu {
+  position: absolute !important;
+  right: 0px !important;
+  left: unset !important
 }
 
 </style>

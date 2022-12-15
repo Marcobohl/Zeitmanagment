@@ -55,10 +55,10 @@ export default {
           this.showAlert = true;
           setTimeout(() => {
             this.showAlert = false;
-          }, 500000);
+          }, 5000);
         }
         if(res.data.msg === "TMS:1001") {
-          this.$router.push("home")
+          this.$router.push({ name: 'home' })
         }
       });
 

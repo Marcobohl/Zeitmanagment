@@ -1,8 +1,14 @@
 <template>
   <div class="login">
     <h1>Login</h1>
+    <div>
+      <b-alert class="info-alert" variant="danger" v-model="showAlert" dismissible fade>
+        {{alertMessage}}
+      </b-alert>
+    </div>
     <form @submit.prevent="login">
       <label for="username">
+
         <!-- font awesome icon -->
         <i class="fas fa-user"></i>
       </label>
@@ -19,27 +25,44 @@
     <a href="/login/reset">Passwort vergessen? </a>
     </div>
   </div>
+
 </template>
 
 <script>
+
+import axios from 'axios';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Login",
   data() {
     return {
+      showAlert: false,
+      alertMessage: 'Die E-Mail Adresse oder das Passwort sind nicht korrekt. Bitte versuchen Sie es erneut. ',
       email: '',
       password: '',
     }
   },
   methods: {
-    login() {
-      const data = {
+    login: function () {
+
+      axios.post("/api/login", {
         email: this.email,
         password: this.password
-      }
+      }).then((res)=> {
+        console.log(res.data.msg)
+        if (res.data.msg === "TMS:1002" || res.data.msg === "TMS:1003"){
+          this.showAlert = true;
+          setTimeout(() => {
+            this.showAlert = false;
+          }, 500000);
+        }
+        if(res.data.msg === "TMS:1001") {
+          this.$router.push("home")
+        }
+      });
 
-      let id = null;
+    //  let id = null;
 
      /* if (code hinterlegt, frage ab ob code in der Datenbanbk existiert.) {
           code Exist Loge usere autmoatich ein.
@@ -51,17 +74,18 @@ export default {
        logindaten stimmen nicht error message.
        }
       } */
-
+/*
 
       if (localStorage.getItem("logtin") === null) {
         // eslint-disable-next-line no-unused-vars
         id = Math.random().toString(36).substr(2, 9);
 
         localStorage.logtin = id
-      }
+      }*/
 
-      this.$router.push("home")
-      console.log(data)
+
+
+     // this.$router.push("home")
     }
   }
 }
@@ -84,15 +108,19 @@ export default {
 </script>
 
 <style scoped>
+.info-alert {
+  margin-right: auto;
+  text-align: center;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  border-color: unset;
+}
 
 .btn-primary {
   background-color: #3274d6;
   padding: 10px 135px;
   border-radius: 0px;
-}
-
-.btn-primary:hover {
-background-color: #003fb9;
 }
 
 .form-group {

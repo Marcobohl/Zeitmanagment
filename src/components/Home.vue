@@ -15,6 +15,9 @@ import Fooder from "./fooder"
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Home",
+  created () {
+    document.title = "TimeWatch | Home";
+  },
     components: {
     Nav,
     Fooder

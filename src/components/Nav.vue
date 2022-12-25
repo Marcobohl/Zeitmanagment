@@ -26,6 +26,8 @@ export default {
   name: `Nav`,
   methods: {
     Logout() {
+
+      this.$router.push({ name: 'login' })
     }
   }
 }

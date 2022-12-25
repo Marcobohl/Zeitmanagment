@@ -4,9 +4,11 @@ import login from "@/components/Login";
 import fpassword from "@/components/fpassword";
 import home from "@/components/Home";
 
+const loginpage = (to, from, next) =>{
+    next({ name: 'login' });
+}
+
 const checkLogin = (to, from, next) =>{
-
-
     next();
 
     /* if (checke login code.) {
@@ -27,11 +29,11 @@ const checkLogin = (to, from, next) =>{
 }
 
 const routes = [
-    {path: '/',beforeEnter: checkLogin, component: login},
-    {path: '/login', component: login, name:'login'},
+    {path: '/',beforeEnter: loginpage, component: login},
+    {path: '/Login', component: login, name:'login'},
     {path: '/Home',beforeEnter: checkLogin, component: home, name:'home'},
     {path: '/Login/reset', component: fpassword, name:'reset'},
-    {path: '/:pathMatch(.*)*', component: login, name: 'NotFound'},
+    {path: '/:pathMatch(.*)*',beforeEnter: loginpage, component: login, name: 'NotFound'},
 ];
 
 

@@ -1,8 +1,16 @@
 <template>
   <div class="login">
     <h1>Passwort vergessen? </h1>
+    <div>
+      <b-alert class="info-alert" variant="danger" v-model="showAlert" dismissible fade>
+        {{alertMessage}}
+      </b-alert>
+      <b-alert class="info-alert" variant="success" v-model="showAlert2" dismissible fade>
+        {{alertMessage2}}
+      </b-alert>
+    </div>
     <p class="ftext" >Bitte gib hir deine E-Mail-Adresse ein. Wir schicken dir sofort einen Code zu, mit dem du ein neues Passwort anlegen kannst. </p>
-    <form @submit.prevent="handelsubmit">
+    <form @submit.prevent="passwordrest">
       <label for="username">
         <!-- font awesome icon -->
         <i class="fas fa-user"></i>
@@ -21,27 +29,67 @@
 <script>
 
 
+import axios from "axios";
+
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "fpassword",
+  created () {
+    document.title = "TimeWatch | Rest";
+  },
   data() {
     return {
-      email: ''
+      showAlert: false,
+      showAlert2: false,
+      email: '',
+      alertMessage: 'Bitte gebe eine Gültige Mail an, die im System Regstriert ist.',
+      alertMessage2: 'Sofern für diese Mail ein Account Existiert haben wir Ihnen einen Code geschickt über den Sie Ihr Passwort zurücksetzen können.'
     }
   },
     methods: {
-      handelsubmit() {
+      passwordrest() {
         const data = {
           email: this.email
         }
         console.log(data)
-        this.$router.push("fpasswordconfirm")
+
+        axios.post("/api/reset", {
+          email: this.email,
+        }).then((res)=> {
+          console.log(res.data.msg)
+
+
+          if (res.data.msg === "TMS:1004"){
+            this.showAlert = true;
+            setTimeout(() => {
+              this.showAlert = false;
+            }, 3000);
+          }
+
+          if (res.data.msg === "TMS:1005"){
+            this.showAlert2 = true;
+            setTimeout(() => {
+              this.showAlert2 = false;
+            }, 3000);
+          }
+
+
+        });
       }
     }
 }
 </script>
 
 <style scoped>
+
+.info-alert {
+  margin-right: auto;
+  text-align: center;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  border-color: unset;
+}
 
 .modal-footer {
   background: #ecf0f1;

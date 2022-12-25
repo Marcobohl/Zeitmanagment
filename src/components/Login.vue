@@ -35,6 +35,9 @@ import axios from 'axios';
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Login",
+  created () {
+    document.title = "TimeWatch | Login";
+  },
   data() {
     return {
       showAlert: false,
@@ -55,7 +58,7 @@ export default {
           this.showAlert = true;
           setTimeout(() => {
             this.showAlert = false;
-          }, 5000);
+          }, 3000);
         }
         if(res.data.msg === "TMS:1001") {
           this.$router.push({ name: 'home' })

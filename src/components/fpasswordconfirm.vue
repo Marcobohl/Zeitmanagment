@@ -1,25 +1,36 @@
 <template>
   <div class="login">
     <h1>Passwort vergessen? </h1>
+    <div>
+      <b-alert class="info-alert" variant="success" v-model="showAlert2" dismissible fade>
+        <p>Password Reset Erfolgreich.</p>
+      </b-alert>
+      <b-alert class="info-alert" variant="danger" v-model="showAlert" dismissible fade>
+        <p>
+          Bitte, beachte unsere Password Richtlinen.
+        </p>
+        <hr>
+        <ul>
+          <li>Groß- und Kleinbuchstaben</li>
+          <li>1 Sonderzeichen</li>
+          <li>Mindestsen 8 Zeichen</li>
+        </ul>
+      </b-alert>
+    </div>
     <p class="ftext" >Bitte gebe nun dein Neues Password und den Bestätigungscode ein.</p>
-    <form @submit.prevent="handelsubmit">
-      <label for="username">
-        <!-- font awesome icon -->
-        <i class="fa fa-check-circle"></i>
-      </label>
-      <input type="text"  v-model="email" placeholder="Bestätigungscode" id="email" required>
+    <form @submit.prevent="passwordreset">
 
       <label for="username">
         <!-- font awesome icon -->
         <i class="fa fa-lock"></i>
       </label>
-      <input type="text"  v-model="email" placeholder="Neues Password" id="email" required>
+      <input type="text"  v-model="password" placeholder="Neues Password" id="email" required>
 
       <label for="username">
         <!-- font awesome icon -->
         <i class="fa fa-lock"></i>
       </label>
-      <input type="text"  v-model="email" placeholder="Password Bestätigen" id="email" required>
+      <input type="text"  v-model="passwordconfirm" placeholder="Password Bestätigen" id="email" required>
 
       <div class="form-group">
         <button class="btn btn-primary btn-block btn-lg">Absenden</button>
@@ -33,26 +44,61 @@
 
 <script>
 
+import axios from "axios";
+
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "fpassword",
   data() {
     return {
-      email: ''
+      showAlert2: false,
+      showAlert: false,
+      password: '',
+      passwordconfirm: '',
+      code: ''
     }
   },
   methods: {
-    handelsubmit() {
-      const data = {
-        email: this.email
-      }
-      console.log(data)
+    passwordreset() {
+
+      axios.post("/api/reset/code/password", {
+        password: this.password,
+        passwordconfirm: this.passwordconfirm,
+        code: this.$route.params.code
+      }).then((res)=> {
+        console.log(res.data.msg)
+
+        if (res.data.msg === "TMS:1008"){
+          this.showAlert = true;
+          setTimeout(() => {
+            this.showAlert = false;
+          }, 16000);
+        }
+
+        if (res.data.msg === "TMS:1009"){
+          this.showAlert2 = true;
+          setTimeout(() => {
+            this.showAlert2 = false;
+            this.$router.push({ name: 'login' })
+          }, 6000);
+
+        }
+
+      });
     }
   }
 }
 </script>
 
 <style scoped>
+
+.info-alert {
+  margin-right: auto;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  border-color: unset;
+}
 
 .modal-footer {
   background: #ecf0f1;
@@ -61,6 +107,11 @@ export default {
 
   font-size: 13px;
   justify-content: center;
+  height: 50px;
+}
+
+.form-group {
+  margin-bottom: 20px;
 }
 
 .btn-primary {

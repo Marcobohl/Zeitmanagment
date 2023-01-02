@@ -70,7 +70,8 @@ export default {
             this.showAlert2 = true;
             setTimeout(() => {
               this.showAlert2 = false;
-            }, 3000);
+            }, 9000);
+
           }
 
 

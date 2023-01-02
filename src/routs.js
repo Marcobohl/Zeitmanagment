@@ -3,6 +3,28 @@ import {createRouter, createWebHistory} from 'vue-router'
 import login from "@/components/Login";
 import fpassword from "@/components/fpassword";
 import home from "@/components/Home";
+import fpasswordconfirm from "@/components/fpasswordconfirm";
+import axios from "axios";
+
+const resetcodeccheck = (to, from, next) =>{
+    console.log(to.params.code)
+
+
+    axios.post("/api/reset/code", {
+        code: to.params.code,
+    }).then((res)=> {
+        console.log(res.data.msg)
+
+        if (res.data.msg === "TMS:1006"){
+            next({ name: 'reset' });
+        }
+
+        if (res.data.msg === "TMS:1007"){
+            next();
+        }
+
+    });
+}
 
 const loginpage = (to, from, next) =>{
     next({ name: 'login' });
@@ -34,6 +56,7 @@ const routes = [
     {path: '/Home',beforeEnter: checkLogin, component: home, name:'home'},
     {path: '/Login/reset', component: fpassword, name:'reset'},
     {path: '/:pathMatch(.*)*',beforeEnter: loginpage, component: login, name: 'NotFound'},
+    {path: '/Login/reset/:code',beforeEnter: resetcodeccheck, component: fpasswordconfirm, name: "restpassword", props: true }
 ];
 
 

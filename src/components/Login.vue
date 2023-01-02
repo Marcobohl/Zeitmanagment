@@ -50,11 +50,15 @@ export default {
     login: function () {
 
       axios.post("/api/login", {
+
+
+
+
         email: this.email,
         password: this.password
       }).then((res)=> {
         console.log(res.data.msg)
-        if (res.data.msg === "TMS:1002" || res.data.msg === "TMS:1003"){
+        if (res.data.msg === "TMS:1002" || res.data.msg === "TMS:1003" || res.data.msg === "TMS:1010"){
           this.showAlert = true;
           setTimeout(() => {
             this.showAlert = false;

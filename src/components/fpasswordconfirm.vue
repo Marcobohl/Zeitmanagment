@@ -49,6 +49,9 @@ import axios from "axios";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "fpassword",
+  created () {
+    document.title = "TimeWatch | Password Reset";
+  },
   data() {
     return {
       showAlert2: false,
@@ -76,6 +79,11 @@ export default {
         }
 
         if (res.data.msg === "TMS:1009"){
+          let codeback = res.data.code;
+
+          localStorage.setItem("Scode", codeback.sessioncode);
+          sessionStorage.setItem("Mail", codeback.semail)
+
           this.showAlert2 = true;
           setTimeout(() => {
             this.showAlert2 = false;

@@ -27,33 +27,79 @@ const resetcodeccheck = (to, from, next) =>{
 }
 
 const loginpage = (to, from, next) =>{
-    next({ name: 'login' });
+    if (localStorage.getItem("Scode") === null) {
+        next("login")
+    } else {
+        axios.post("/api/login/logincode", {
+            scode: localStorage.getItem("Scode"),
+        }).then((res)=> {
+            console.log(res.data.msg);
+
+            if (res.data.msg === "TMS:1011" || res.data.msg === "TMS:1013") {
+
+                if (to.path == "/login") {
+                    next();
+                } else {
+                    next("login");
+                }
+
+            }
+
+            if (res.data.msg === "TMS:1012") {
+                if (to.path == "/home") {
+                    next();
+                } else {
+                    next("home");
+
+                    let codeback = res.data.code;
+                    sessionStorage.setItem("Mail", codeback.semail)
+                }
+
+            }
+        });
+    }
 }
 
-const checkLogin = (to, from, next) =>{
-    next();
+const logincheck = (to, from, next) =>{
 
-    /* if (checke login code.) {
-        code wure in datenbank gefunden loge usere ein.
+    if (localStorage.getItem("Scode") === null) {
+        if (to.path == "/login") {
+            next();
+        } else {
+            next("login");
+        }
+
     } else {
-        code wurde nicht gefunden leite usere zu anmeldung weiter.
-    } */
 
+        axios.post("/api/login/logincode", {
+            scode: localStorage.getItem("Scode"),
+        }).then((res)=> {
+            console.log(res.data.msg);
 
-    /*  if (localStorage.logtin == "bdp6j0y4q") {
-           // next({name: "login"})
-          next()
-      } else {
-      next({name: "login"})
-      }
-       //   next({name: "login"})
-    */
+            if (res.data.msg === "TMS:1011" || res.data.msg === "TMS:1013") {
+
+                if (to.path == "/login") {
+                    next();
+                } else {
+                    next("login");
+                }
+
+            }
+
+            if (res.data.msg === "TMS:1012") {
+                next("home");
+                let codeback = res.data.code;
+                sessionStorage.setItem("Mail", codeback.semail)
+            }
+        });
+
+    }
 }
 
 const routes = [
     {path: '/',beforeEnter: loginpage, component: login},
-    {path: '/Login', component: login, name:'login'},
-    {path: '/Home',beforeEnter: checkLogin, component: home, name:'home'},
+    {path: '/Login', beforeEnter: logincheck, component: login, name:'login'},
+    {path: '/Home',beforeEnter: loginpage, component: home, name:'home'},
     {path: '/Login/reset', component: fpassword, name:'reset'},
     {path: '/:pathMatch(.*)*',beforeEnter: loginpage, component: login, name: 'NotFound'},
     {path: '/Login/reset/:code',beforeEnter: resetcodeccheck, component: fpasswordconfirm, name: "restpassword", props: true }

@@ -65,6 +65,13 @@ export default {
           }, 3000);
         }
         if(res.data.msg === "TMS:1001") {
+
+          let codeback = res.data.code;
+
+          localStorage.setItem("Scode", codeback.sessioncode);
+          sessionStorage.setItem("Mail", codeback.semail)
+
+
           this.$router.push({ name: 'home' })
         }
       });

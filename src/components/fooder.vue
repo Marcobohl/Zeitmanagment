@@ -1,6 +1,6 @@
 <template>
 <footer class="footer fixed-bottom">
-  <p class="text-muted">© 2022 Copyright INFOTECH Systems GmbH – all rights Reserverd</p>
+  <p class="text-muted">© 2023 Copyright INFOTECH Systems GmbH – all rights Reserverd</p>
 </footer>
 </template>
 

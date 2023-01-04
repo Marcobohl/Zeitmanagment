@@ -9,10 +9,10 @@
           </a>
 
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a  class="dropdown-item" href="#">Zeitmanagment</a>
-            <a class="dropdown-item" href="#">Verwaltung</a>
-            <a class="dropdown-item" href="#">Adminbereich</a>
-            <a @click="Logout" class="dropdown-item">Logout</a>
+            <a class="dropdown-item" href="#">Zeitmanagment</a>
+            <a v-show="verwaltung === 1" class="dropdown-item" href="#">Verwaltung</a>
+            <a v-show="admin === 1" class="dropdown-item" href="#">Adminbereich</a>
+            <a @click="Logout" class="dropdown-item">Ausloggen</a>
           </div>
         </div>
       </ul>
@@ -21,9 +21,40 @@
 </template>
 
 <script>
+
+import axios from "axios";
+
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: `Nav`,
+  data() {
+    return {
+      admin: 0,
+      verwaltung: 0,
+    }
+  },
+  mounted() {
+
+    // Admin Page Aktivieren
+    axios.post("/api/admincheck", {
+        mail: sessionStorage.getItem("Mail"),
+    }).then((res)=> {
+      if (res.data.msg === "TMS:1014") {
+        this.admin = 1
+      }
+
+    });
+
+    // Verwaltung Page Aktivieren
+    axios.post("/api/verwaltungcheck", {
+      mail: sessionStorage.getItem("Mail"),
+    }).then((res)=> {
+      if (res.data.msg === "TMS:1015") {
+        this.verwaltung = 1
+      }
+
+    });
+  },
   methods: {
     Logout() {
 
@@ -31,7 +62,7 @@ export default {
       sessionStorage.clear();
 
       this.$router.push({ name: 'login' })
-    }
+    },
   }
 }
 </script>

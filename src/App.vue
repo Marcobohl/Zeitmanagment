@@ -1,12 +1,5 @@
 <template>
-  <div id="app">
-
-    <div class="auth-wrapper">
-      <div class="auth-inner">
-        <router-view />
-      </div>
-    </div>
-  </div>
+  <router-view />
 </template>
 
 <script>
@@ -93,4 +86,12 @@ export default {
   .forgot-password a {
     color: #167bff;
   }
+
+  .Mainhome {
+    margin-top: 95px;
+    margin-bottom: 95px;
+    background-color: #ffffff;
+    border-radius: 10px;
+  }
+
 </style>

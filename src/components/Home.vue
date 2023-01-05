@@ -1,11 +1,10 @@
 <template>
+  <Nav />
   <div class="container">
-    <Nav />
       <div class="Mainhome">
       </div>
   </div>
-  <footer>  <fooder />
-  </footer>
+    <fooder />
 </template>
 
 <script>

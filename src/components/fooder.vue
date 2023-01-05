@@ -17,7 +17,11 @@ p {
 }
 .footer {
   background-color: #ffffff;
-  height: 35px;
+  box-shadow: 0px 14px 80px rgba(24, 35, 58, 0.2);
+  height: 56px;
+}
+.text-muted {
+  padding-top: 15px;
 }
 
 </style>

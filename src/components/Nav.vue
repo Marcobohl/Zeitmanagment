@@ -1,7 +1,7 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+  <nav class="navbar navbar-light navbar-inverse fixed-top">
     <div class="container">
-    <a class="navbar-brand" href="#">TimeWatch</a>
+    <a class="navbar-brand" href="#"><b>TimeWatch</b>, Hallo {{vorname}}!</a>
       <ul class="navbar-nav ml-auto" >
         <div class="dropdown show">
           <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -9,9 +9,9 @@
           </a>
 
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="#">Zeitmanagment</a>
+            <a class="dropdown-item" @click="Homepage" >Zeitmanagment</a>
             <a v-show="verwaltung === 1" class="dropdown-item" href="#">Verwaltung</a>
-            <a v-show="admin === 1" class="dropdown-item" href="#">Adminbereich</a>
+            <a v-show="admin === 1" @click="Adminpage"  class="dropdown-item">Adminbereich</a>
             <a @click="Logout" class="dropdown-item">Ausloggen</a>
           </div>
         </div>
@@ -31,6 +31,7 @@ export default {
     return {
       admin: 0,
       verwaltung: 0,
+      vorname: "",
     }
   },
   mounted() {
@@ -41,6 +42,16 @@ export default {
     }).then((res)=> {
       if (res.data.msg === "TMS:1014") {
         this.admin = 1
+      }
+
+    });
+
+    // User name Anzeigen
+    axios.post("/api/username", {
+      mail: sessionStorage.getItem("Mail"),
+    }).then((res)=> {
+      if (res.data.msg === "TMS:1016") {
+        this.vorname = res.data.data.name;
       }
 
     });
@@ -62,6 +73,12 @@ export default {
       sessionStorage.clear();
 
       this.$router.push({ name: 'login' })
+    },
+    Adminpage() {
+      this.$router.push({ name: 'adminpage' })
+    },
+    Homepage() {
+      this.$router.push({ name: 'home' })
     },
   }
 }

@@ -9,8 +9,8 @@
           </a>
 
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" @click="Homepage" >Zeitmanagment</a>
-            <a v-show="verwaltung === 1" class="dropdown-item" href="#">Verwaltung</a>
+            <a class="dropdown-item" @click="Homepage">Zeitmanagment</a>
+            <a v-show="verwaltung === 1" class="dropdown-item">Verwaltung</a>
             <a v-show="admin === 1" @click="Adminpage"  class="dropdown-item">Adminbereich</a>
             <a @click="Logout" class="dropdown-item">Ausloggen</a>
           </div>
@@ -84,6 +84,10 @@ export default {
 }
 </script>
 <style scoped>
+
+.dropdown-item {
+  cursor: pointer;
+}
 
 .btn-secondary {
   border-color: #3274d6;

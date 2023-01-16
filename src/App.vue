@@ -41,9 +41,6 @@ export default {
     height: 100%;
   }
 
-  #app {
-    text-align: center;
-  }
 
   .navbar-light {
     background-color: #ffffff;
@@ -88,6 +85,10 @@ export default {
   }
 
   .Mainhome {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
     margin-top: 95px;
     margin-bottom: 95px;
     background-color: #ffffff;

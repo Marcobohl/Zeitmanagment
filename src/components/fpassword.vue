@@ -1,14 +1,6 @@
 <template>
   <div class="login">
     <h1>Passwort vergessen? </h1>
-    <div>
-      <b-alert class="info-alert" variant="danger" v-model="showAlert" dismissible fade>
-        {{alertMessage}}
-      </b-alert>
-      <b-alert class="info-alert" variant="success" v-model="showAlert2" dismissible fade>
-        {{alertMessage2}}
-      </b-alert>
-    </div>
     <p class="ftext" >Bitte gib hir deine E-Mail-Adresse ein. Wir schicken dir sofort einen Code zu, mit dem du ein neues Passwort anlegen kannst. </p>
     <form @submit.prevent="passwordrest">
       <label for="username">
@@ -23,6 +15,14 @@
     <div class="modal-footer">
       <a href="/login">Zurück zum Login</a>
     </div>
+  </div>
+  <div>
+    <b-alert class="info-alert" variant="danger" v-model="showAlert" dismissible fade>
+      {{alertMessage}}
+    </b-alert>
+    <b-alert class="info-alert" variant="success" v-model="showAlert2" dismissible fade>
+      {{alertMessage2}}
+    </b-alert>
   </div>
 </template>
 
@@ -126,7 +126,11 @@ p {
   width: 400px;
   background-color: #ffffff;
   box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
-  margin: 100px auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%)
 }
 .login h1 {
   text-align: center;

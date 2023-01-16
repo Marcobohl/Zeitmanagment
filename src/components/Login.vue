@@ -1,11 +1,6 @@
 <template>
   <div class="login">
     <h1>Login</h1>
-    <div>
-      <b-alert class="info-alert" variant="danger" v-model="showAlert" dismissible fade>
-        {{alertMessage}}
-      </b-alert>
-    </div>
     <form @submit.prevent="login">
       <label for="username">
 
@@ -24,6 +19,12 @@
     <div class="modal-footer">
     <a href="/login/reset">Passwort vergessen? </a>
     </div>
+  </div>
+
+  <div>
+    <b-alert class="info-alert" variant="danger" v-model="showAlert" dismissible fade>
+      {{alertMessage}}
+    </b-alert>
   </div>
 
 </template>
@@ -155,7 +156,11 @@ export default {
   width: 400px;
   background-color: #ffffff;
   box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
-  margin: 100px auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%)
 }
 .login h1 {
   text-align: center;

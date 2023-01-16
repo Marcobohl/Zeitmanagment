@@ -1,22 +1,6 @@
 <template>
   <div class="login">
     <h1>Passwort vergessen? </h1>
-    <div>
-      <b-alert class="info-alert" variant="success" v-model="showAlert2" dismissible fade>
-        <p>Password Reset Erfolgreich.</p>
-      </b-alert>
-      <b-alert class="info-alert" variant="danger" v-model="showAlert" dismissible fade>
-        <p>
-          Bitte, beachte unsere Password Richtlinen.
-        </p>
-        <hr>
-        <ul>
-          <li>Groß- und Kleinbuchstaben</li>
-          <li>1 Sonderzeichen</li>
-          <li>Mindestsen 8 Zeichen</li>
-        </ul>
-      </b-alert>
-    </div>
     <p class="ftext" >Bitte gebe nun dein Neues Password und den Bestätigungscode ein.</p>
     <form @submit.prevent="passwordreset">
 
@@ -39,6 +23,22 @@
     <div class="modal-footer">
       <a href="/login">Zurück zum Login</a>
     </div>
+  </div>
+  <div>
+    <b-alert class="info-alert" variant="success" v-model="showAlert2" dismissible fade>
+      <p>Password Reset Erfolgreich.</p>
+    </b-alert>
+    <b-alert class="info-alert" variant="danger" v-model="showAlert" dismissible fade>
+      <p>
+        Bitte, beachte unsere Password Richtlinen.
+      </p>
+      <hr>
+      <ul>
+        <li>Groß- und Kleinbuchstaben</li>
+        <li>1 Sonderzeichen</li>
+        <li>Mindestsen 8 Zeichen</li>
+      </ul>
+    </b-alert>
   </div>
 </template>
 
@@ -87,9 +87,8 @@ export default {
           this.showAlert2 = true;
           setTimeout(() => {
             this.showAlert2 = false;
-            this.$router.push({ name: 'login' })
           }, 6000);
-
+          this.$router.push({name: "login"})
         }
 
       });
@@ -142,7 +141,11 @@ p {
   width: 400px;
   background-color: #ffffff;
   box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
-  margin: 100px auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%)
 }
 .login h1 {
   text-align: center;

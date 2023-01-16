@@ -29,7 +29,7 @@ const resetcodeccheck = (to, from, next) =>{
 
 const loginpage = (to, from, next) =>{
     if (localStorage.getItem("Scode") === null) {
-        next("login")
+        next({ name: 'login' });
     } else {
         axios.post("/api/login/logincode", {
             scode: localStorage.getItem("Scode"),
@@ -41,7 +41,7 @@ const loginpage = (to, from, next) =>{
                 if (to.path == "/login") {
                     next();
                 } else {
-                    next("login");
+                    next({ name: 'login' });
                 }
 
             }
@@ -50,7 +50,7 @@ const loginpage = (to, from, next) =>{
                 if (to.path == "/home") {
                     next();
                 } else {
-                    next("home");
+                    next({ name: 'home' });
 
                     let codeback = res.data.code;
                     sessionStorage.setItem("Mail", codeback.semail)
@@ -63,7 +63,7 @@ const loginpage = (to, from, next) =>{
 
 const loginpageadmin = (to, from, next) =>{
     if (localStorage.getItem("Scode") === null) {
-        next("login")
+        next({ name: 'login' });
     } else {
         axios.post("/api/login/logincode/admin", {
             scode: localStorage.getItem("Scode"),
@@ -75,7 +75,7 @@ const loginpageadmin = (to, from, next) =>{
                 if (to.path == "/login") {
                     next();
                 } else {
-                    next("login");
+                    next({ name: 'login' });
                 }
 
             }
@@ -88,10 +88,10 @@ const loginpageadmin = (to, from, next) =>{
                     if (to.path == "/admin") {
                         next();
                     } else {
-                        next("admin");
+                        next({ name: 'adminpage' });
                     }
                 } else {
-                    next("home");
+                    next({ name: 'home' });
                 }
 
                 sessionStorage.setItem("Mail", codeback.semail)
@@ -106,7 +106,7 @@ const logincheck = (to, from, next) =>{
         if (to.path == "/login") {
             next();
         } else {
-            next("login");
+            next({ name: 'login' });
         }
 
     } else {
@@ -121,13 +121,13 @@ const logincheck = (to, from, next) =>{
                 if (to.path == "/login") {
                     next();
                 } else {
-                    next("login");
+                    next({ name: 'login' });
                 }
 
             }
 
             if (res.data.msg === "TMS:1012") {
-                next("home");
+                next({ name: 'home' });
                 let codeback = res.data.code;
                 sessionStorage.setItem("Mail", codeback.semail)
             }
@@ -138,11 +138,11 @@ const logincheck = (to, from, next) =>{
 
 const routes = [
     {path: '/',beforeEnter: loginpage, component: login},
-    {path: '/Login', beforeEnter: logincheck, component: login, name:'login'},
-    {path: '/Home',beforeEnter: loginpage, component: home, name:'home'},
-    {path: '/Login/reset', component: fpassword, name:'reset'},
+    {path: '/login', beforeEnter: logincheck, component: login, name:'login'},
+    {path: '/home',beforeEnter: loginpage, component: home, name:'home'},
+    {path: '/login/reset', component: fpassword, name:'reset'},
     {path: '/:pathMatch(.*)*',beforeEnter: loginpage, component: login, name: 'NotFound'},
-    {path: '/Login/reset/:code',beforeEnter: resetcodeccheck, component: fpasswordconfirm, name: "restpassword", props: true },
+    {path: '/login/reset/:code',beforeEnter: resetcodeccheck, component: fpasswordconfirm, name: "restpassword", props: true },
     {path: '/admin',beforeEnter: loginpageadmin, component: admin, name: "adminpage", props: true }
 ];
 

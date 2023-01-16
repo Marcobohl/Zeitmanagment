@@ -2,42 +2,10 @@
   <Nav />
   <div class="container">
       <div class="Mainhome">
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
+        <p id="benutzerverwalung">Benutzerverwaltung</p>
+          <createuser />
 
-
-
+        <usertabel />
       </div>
     </div>
   <fooder />
@@ -46,6 +14,8 @@
 <script>
 import Nav from "@/components/Nav";
 import Fooder from "@/components/fooder";
+import createuser from "@/components/createuser";
+import usertabel from "@/components/usertabel";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -55,11 +25,24 @@ export default {
   },
   components: {
     Nav,
-    Fooder
+    Fooder,
+    createuser,
+    usertabel,
   }
 }
 </script>
 
 <style scoped>
 
+.Mainhome {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+#benutzerverwalung {
+  color: #111111;
+  text-align: center;
+  font-size: 40px;
+  font-weight: 400;
+}
 </style>

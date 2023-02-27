@@ -20,6 +20,7 @@
           </b-row>
           </center>
 
+        <timetabel />
 
       </div>
   </div>
@@ -30,6 +31,7 @@
 import Nav from "./Nav"
 import Fooder from "./fooder"
 import axios from "axios";
+import Timetabel from "@/components/timetabel";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Home",
@@ -49,6 +51,7 @@ export default {
       }
   },
   components: {
+    Timetabel,
     Nav,
     Fooder
   },

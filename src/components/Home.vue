@@ -6,19 +6,17 @@
         <p id="timewatch">TimeWatch</p>
 
         <div id="clock">
-          <center> <span class="time">{{ time }}</span> </center>
+          <span class="time">{{ time }}</span>
         </div>
 
-          <center>
             <b-row>
 
             <b-col >
-               <a v-if="this.running === true" id="stop" @click="stop">Ausbuchen</a>
+               <a v-if="this.running" id="stop" @click="stop">Ausbuchen</a>
               <a v-else id="start" @click="start">Einbuchen</a>
             </b-col>
 
           </b-row>
-          </center>
 
         <timetabel />
 
@@ -29,7 +27,7 @@
 
 <script>
 import Nav from "./Nav"
-import Fooder from "./fooder"
+import Fooder from "./Fooder"
 import axios from "axios";
 import Timetabel from "@/components/timetabel";
 export default {
@@ -59,7 +57,7 @@ export default {
     document.title = "TimeWatch | Home";
 
     let heute = new Date();
-    const monat = heute.getMonth() + 1
+    const monat = heute.getMonth() + 1;
 
 
     axios.post("/api/loadtimer", {
@@ -94,34 +92,8 @@ export default {
         let newDateObj = new Date(azeit.getTime() - timers);
         console.log(newDateObj);
 
-        let st
-        if (gzeit.getHours() === 1 || gzeit.getHours() === 2 || gzeit.getHours() === 3 || gzeit.getHours() === 4 || gzeit.getHours() === 5 || gzeit.getHours() === 6 || gzeit.getHours() === 7 || gzeit.getHours() === 8 || gzeit.getHours() === 9) {
-          st = "0" + gzeit.getHours()
-        } else if (gzeit.getHours() === 0 ) {
-          st = "00"
-        } else {
-          st = gzeit.getHours();
-        }
 
-        let min
-        if (gzeit.getMinutes() === 1 || gzeit.getMinutes() === 2 || gzeit.getMinutes() === 3 || gzeit.getMinutes() === 4 || gzeit.getMinutes() === 5 || gzeit.getMinutes() === 6 || gzeit.getMinutes() === 7 || gzeit.getMinutes() === 8 || gzeit.getMinutes() === 9) {
-          min = "0" + gzeit.getMinutes()
-        } else if (gzeit.getMinutes() === 0 ) {
-          min = "00"
-        } else {
-          min = gzeit.getMinutes();
-        }
-
-        let sec
-        if (gzeit.getSeconds() === 1 || gzeit.getSeconds() === 2 || gzeit.getSeconds() === 3 || gzeit.getSeconds() === 4 || gzeit.getSeconds() === 5 || gzeit.getSeconds() === 6 || gzeit.getSeconds() === 7 || gzeit.getSeconds() === 8 || gzeit.getSeconds() === 9) {
-          sec = "0" + gzeit.getSeconds()
-        } else if (gzeit.getSeconds() === 0 ) {
-          sec = "00"
-        } else {
-          sec = gzeit.getSeconds();
-        }
-
-        this.time = st + ":" + min + ":" + sec
+        this.time = gzeit.getHours().toString().padStart(2, '0') + ":" + gzeit.getMinutes().toString().padStart(2, '0') + ":" + gzeit.getSeconds().toString().padStart(2, '0');
         this.gzeit = timers
       }
 
@@ -131,34 +103,7 @@ export default {
 
             let gzeit = new Date(res.data.data.gzeit);
 
-            let st
-            if (gzeit.getHours() === 1 || gzeit.getHours() === 2 || gzeit.getHours() === 3 || gzeit.getHours() === 4 || gzeit.getHours() === 5 || gzeit.getHours() === 6 || gzeit.getHours() === 7 || gzeit.getHours() === 8 || gzeit.getHours() === 9) {
-              st = "0" + gzeit.getHours()
-            } else if (gzeit.getHours() === 0 ) {
-              st = "00"
-            } else {
-              st = gzeit.getHours();
-            }
-
-            let min
-            if (gzeit.getMinutes() === 1 || gzeit.getMinutes() === 2 || gzeit.getMinutes() === 3 || gzeit.getMinutes() === 4 || gzeit.getMinutes() === 5 || gzeit.getMinutes() === 6 || gzeit.getMinutes() === 7 || gzeit.getMinutes() === 8 || gzeit.getMinutes() === 9) {
-              min = "0" + gzeit.getMinutes()
-            } else if (gzeit.getMinutes() === 0 ) {
-              min = "00"
-            } else {
-              min = gzeit.getMinutes();
-            }
-
-            let sec
-            if (gzeit.getSeconds() === 1 || gzeit.getSeconds() === 2 || gzeit.getSeconds() === 3 || gzeit.getSeconds() === 4 || gzeit.getSeconds() === 5 || gzeit.getSeconds() === 6 || gzeit.getSeconds() === 7 || gzeit.getSeconds() === 8 || gzeit.getSeconds() === 9) {
-              sec = "0" + gzeit.getSeconds()
-            } else if (gzeit.getSeconds() === 0 ) {
-              sec = "00"
-            } else {
-              sec = gzeit.getSeconds();
-            }
-
-            this.time = st + ":" + min + ":" + sec;
+            this.time = gzeit.getHours().toString().padStart(2, '0') + ":" + gzeit.getMinutes().toString().padStart(2, '0') + ":" + gzeit.getSeconds().toString().padStart(2, '0');
 
             let newDateObj = new Date(timers);
             console.log(newDateObj.getTime());
@@ -169,17 +114,8 @@ export default {
             this.resum = true;
           }
     });
-
-
-    window.addEventListener('beforeunload', this.closeevent);
   },
   methods: {
-
-    closeevent: function () {
-
-
-
-    },
     start: function () {
 
       if (this.gzeit === null) {
@@ -270,17 +206,10 @@ export default {
           , sec = timeElapsed.getUTCSeconds();
 
       this.time =
-          this.zeroPrefix(hour, 2) + ":" +
-          this.zeroPrefix(min, 2) + ":" +
-          this.zeroPrefix(sec, 2)
+          hour.toString().padStart(2, '0') + ":" +
+          min.toString().padStart(2, '0') + ":" +
+          sec.toString().padStart(2, '0')
     },
-    zeroPrefix: function (num, digit) {
-      var zero = '';
-      for(var i = 0; i < digit; i++) {
-        zero += '0';
-      }
-      return (zero + num).slice(-digit);
-    }
 
   }
 
@@ -295,6 +224,10 @@ export default {
 
 .btn-primary:hover {
   background-color: #003fb9;
+}
+
+.col {
+  text-align: center;
 }
 
 .Mainhome {
@@ -315,6 +248,7 @@ export default {
   align-self: center;
   color: #000000;
   text-shadow: 0px 0px 1px;
+  text-align: center;
 }
 
 .time {

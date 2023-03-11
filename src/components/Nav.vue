@@ -10,7 +10,7 @@
 
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <a class="dropdown-item" @click="Homepage">Zeitmanagment</a>
-            <a v-show="verwaltung === 1" class="dropdown-item">Verwaltung</a>
+            <a v-show="verwaltung === 1"  @click="Verwaltungpage" class="dropdown-item">Verwaltung</a>
             <a v-show="admin === 1" @click="Adminpage"  class="dropdown-item">Adminbereich</a>
             <a @click="Logout" class="dropdown-item">Ausloggen</a>
           </div>
@@ -76,6 +76,9 @@ export default {
     },
     Adminpage() {
       this.$router.push({ name: 'adminpage' })
+    },
+    Verwaltungpage() {
+      this.$router.push({ name: 'verwaltung' })
     },
     Homepage() {
       this.$router.push({ name: 'home' })

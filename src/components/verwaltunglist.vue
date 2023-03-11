@@ -1,12 +1,49 @@
 <template>
-  <b-button id="showtime" v-b-toggle.collapse-1 variant="primary">Zeiten einblenden</b-button>
-  <b-collapse id="collapse-1" class="mt-2">
-    <b-card class="card">
-    <div>
-      <b-table striped hover :fields="fields" :items="items"></b-table>
-    </div>
-    </b-card>
-  </b-collapse>
+    <b-col v-if="value == 'E-Mail auswählen'">
+
+      <div class="dropdown">
+        <button
+            class="btn btn-primary dropdown-toggle"
+            type="button" id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false">
+            {{value}}
+        </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" role="menu">
+            <li v-for="itemss in itemss" :key="itemss">
+              <a class="dropdown-item" @click="loadusers(itemss)" href="javascript:void(0)">{{itemss}}</a>
+            </li>
+          </ul>
+      </div>
+    </b-col>
+
+    <b-col v-else>
+
+        <div class="dropdown">
+          <button
+              class="btn btn-primary dropdown-toggle"
+              type="button" id="dropdownMenuButton1"
+              data-bs-toggle="dropdown"
+              aria-expanded="false">
+            {{value}}
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" role="menu">
+            <li v-for="itemss in itemss" :key="itemss">
+              <a class="dropdown-item" @click="loadusers(itemss)"  href="javascript:void(0)">{{itemss}}</a>
+            </li>
+          </ul>
+        </div>
+
+      <div class="test">
+        <b-card class="card">
+          <div>
+            <b-table striped :fields="fields" :items="items"></b-table>
+          </div>
+        </b-card>
+      </div>
+
+
+    </b-col>
 </template>
 
 <script>
@@ -14,24 +51,31 @@ import axios from "axios";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: "timetabel",
+  name: "verwaltunglist",
   data() {
     return {
       fields: ['Datum', 'Arbeitszeit', 'Pausenzeit', 'Überstunden'],
+      itemss: [
+      ],
       items: [
-      ]
+      ],
+      value: 'E-Mail auswählen'
     }
   },
   mounted(){
     this.loaduserTabel();
+
   },
   methods: {
-    loaduserTabel: function(){
+    loadusers: function(p1){
+      this.value = p1;
       axios.post("/api/loadtimerlist", {
-        email: sessionStorage.getItem("Mail"),
+        email: this.value,
       }).then((res)=> {
 
         if(res.data.msg === "TMS:1026") {
+
+          this.items.length = 0
 
           console.log(res)
           let dpause = res.data.pause.pause;
@@ -83,7 +127,7 @@ export default {
                   }
 
 
-                // ist zeit über 4 Stunden
+                  // ist zeit über 4 Stunden
                 } else if ( res.data.data.data[arraystap].gzeit >= 21600000 ) {
 
                   if (dpause >= 1800000) {
@@ -148,12 +192,28 @@ export default {
         }
       });
     },
+    loaduserTabel: function(){
+
+      axios.get("/api/emialsload").then((res) => {
+
+        let arraystap = 0;
+
+        for (let i = 1; i <= res.data.data.length; i++) {
+
+          this.itemss.push(res.data.data[arraystap].email)
+
+          arraystap++;
+        }
+      })
+          .catch(()=>{
+            console.log("Something Went Wrong");
+          })
+    },
   }
 }
 </script>
 
 <style scoped>
-
 .card {
   border-radius: unset !important;
   border: unset !important;
@@ -166,4 +226,7 @@ export default {
 
 }
 
+.test {
+  margin-top: 11px;
+}
 </style>

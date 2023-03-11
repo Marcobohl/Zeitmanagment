@@ -13,7 +13,7 @@
 
 <script>
 import Nav from "@/components/Nav";
-import Fooder from "@/components/fooder";
+import Fooder from "@/components/Fooder";
 import createuser from "@/components/createuser";
 import usertabel from "@/components/usertabel";
 

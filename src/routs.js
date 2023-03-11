@@ -4,6 +4,7 @@ import login from "@/components/Login";
 import fpassword from "@/components/fpassword";
 import home from "@/components/Home";
 import fpasswordconfirm from "@/components/fpasswordconfirm";
+import verwaltung from "@/components/verwaltung";
 import admin from "@/components/admin";
 import axios from "axios";
 
@@ -100,6 +101,45 @@ const loginpageadmin = (to, from, next) =>{
     }
 }
 
+const loginverwaltung = (to, from, next) =>{
+    if (localStorage.getItem("Scode") === null) {
+        next({ name: 'login' });
+    } else {
+        axios.post("/api/login/logincode/verwaltung", {
+            scode: localStorage.getItem("Scode"),
+        }).then((res)=> {
+            console.log(res.data.msg);
+
+            if (res.data.msg === "TMS:1011" || res.data.msg === "TMS:1013") {
+
+                if (to.path == "/login") {
+                    next();
+                } else {
+                    next({ name: 'login' });
+                }
+
+            }
+
+            if (res.data.msg === "TMS:1012") {
+
+                let codeback = res.data.code;
+
+                if (codeback.admin === "1") {
+                    if (to.path == "/verwaltung") {
+                        next();
+                    } else {
+                        next({ name: 'verwaltung' });
+                    }
+                } else {
+                    next({ name: 'home' });
+                }
+
+                sessionStorage.setItem("Mail", codeback.semail)
+            }
+        });
+    }
+}
+
 const logincheck = (to, from, next) =>{
 
     if (localStorage.getItem("Scode") === null) {
@@ -143,7 +183,8 @@ const routes = [
     {path: '/login/reset', component: fpassword, name:'reset'},
     {path: '/:pathMatch(.*)*',beforeEnter: loginpage, component: login, name: 'NotFound'},
     {path: '/login/reset/:code',beforeEnter: resetcodeccheck, component: fpasswordconfirm, name: "restpassword", props: true },
-    {path: '/admin',beforeEnter: loginpageadmin, component: admin, name: "adminpage", props: true }
+    {path: '/admin',beforeEnter: loginpageadmin, component: admin, name: "adminpage", props: true },
+    {path: '/verwaltung',beforeEnter: loginverwaltung, component: verwaltung, name: "verwaltung", props: true }
 ];
 
 

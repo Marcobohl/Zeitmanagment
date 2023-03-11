@@ -6,7 +6,7 @@
       <p class="textnewuser"  > Neuer Benutzer</p>
 
       <div class="card-text">
-        <p class="infotext">Bitte füllen sie alle Felder aus und Klicken anschließend auf Hinzufügen. Der Benutzer wird dan automatisch in der Datenbank angelegt. Der Angelegete Benutzer bekommt anschließend eine Benachrichtugung per Mail dass er absofort auf das System zugreifen kann.</p>
+        <p class="infotext">Bitte füllen Sie alle Felder aus und klicken Sie anschließend auf "Hinzufügen". Der Benutzer wird automatisch in der Datenbank angelegt und erhält im anschluss eine Benachrichtigung per E-Mail, dass er ab sofort auf das System zugreifen kann.</p>
       </div>
 
       <b-form inline @submit.prevent="createusere">

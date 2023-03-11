@@ -11,9 +11,13 @@
 
             <b-row>
 
-            <b-col >
+            <b-col v-if="this.pauserunning == false" >
                <a v-if="this.running" id="stop" @click="stop">Ausbuchen</a>
               <a v-else id="start" @click="start">Einbuchen</a>
+            </b-col>
+            <b-col v-if="this.running">
+            <a v-if="this.pauserunning"  @click="pausestop" >Pause Beenden</a>
+              <a v-else @click="pausestart"> Pause Starten</a>
             </b-col>
 
           </b-row>
@@ -41,6 +45,7 @@ export default {
       stoppedDuration: 0,
       started: null,
       running: false,
+      pauserunning: false,
       resum: false,
       pausenstart: "",
       pausenend: "",
@@ -116,6 +121,38 @@ export default {
     });
   },
   methods: {
+    pausestop: function () {
+      this.pauserunning = false;
+
+      let pausestop = new Date();
+
+      axios.post("/api/pausestoptimer", {
+        email: sessionStorage.getItem("Mail"),
+        stoptimer: pausestop.getTime(),
+      }).then((res)=> {
+        console.log(res.data.msg)
+
+      });
+
+    },
+    pausestart: function () {
+      this.pauserunning = true;
+
+      let pausetimestart = new Date();
+
+      const monat = pausetimestart.getMonth() + 1;
+      const datum = pausetimestart.getFullYear() + "-" + monat + "-" + pausetimestart.getDate();
+
+      axios.post("/api/pausestarttimer", {
+        email: sessionStorage.getItem("Mail"),
+        datum: datum,
+        starttime: pausetimestart.getTime(),
+      }).then((res)=> {
+        console.log(res.data.msg)
+
+      });
+
+    },
     start: function () {
 
       if (this.gzeit === null) {

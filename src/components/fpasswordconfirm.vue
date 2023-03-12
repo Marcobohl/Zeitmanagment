@@ -69,7 +69,6 @@ export default {
         passwordconfirm: this.passwordconfirm,
         code: this.$route.params.code
       }).then((res)=> {
-        console.log(res.data.msg)
 
         if (res.data.msg === "TMS:1008"){
           this.showAlert = true;

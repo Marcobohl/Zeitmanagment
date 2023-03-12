@@ -72,13 +72,11 @@ export default {
 
     }).then((res)=> {
       if (res.data.msg === "TMS:1023"){
-        console.log(res)
         let timers = res.data.data.timer;
         this.time = timers;
 
         var newDateObj = new Date(res.data.data.heute);
-        console.log(newDateObj.getTime());
-        console.log(newDateObj)
+
        this.timeBegan = newDateObj;
         this.started = setInterval(this.clockRunning, 10);
         this.running = true;
@@ -86,16 +84,8 @@ export default {
       }
 
       if (res.data.msg === "TMS:1024") {
-        console.log(res);
         let timers = res.data.data.timer;
-        let azeit = new Date();
         let gzeit = new Date(timers - 3600000);
-        console.log(timers);
-        console.log(azeit.getTime())
-        console.log(gzeit)
-
-        let newDateObj = new Date(azeit.getTime() - timers);
-        console.log(newDateObj);
 
 
         this.time = gzeit.getHours().toString().padStart(2, '0') + ":" + gzeit.getMinutes().toString().padStart(2, '0') + ":" + gzeit.getSeconds().toString().padStart(2, '0');
@@ -103,7 +93,6 @@ export default {
       }
 
           if (res.data.msg === "TMS:1025") {
-            console.log(res)
             let timers = res.data.data.timer;
 
             let gzeit = new Date(res.data.data.gzeit);
@@ -111,8 +100,6 @@ export default {
             this.time = gzeit.getHours().toString().padStart(2, '0') + ":" + gzeit.getMinutes().toString().padStart(2, '0') + ":" + gzeit.getSeconds().toString().padStart(2, '0');
 
             let newDateObj = new Date(timers);
-            console.log(newDateObj.getTime());
-            console.log(newDateObj)
             this.timeBegan = newDateObj;
             this.started = setInterval(this.clockRunning, 10);
             this.running = true;
@@ -129,9 +116,6 @@ export default {
       axios.post("/api/pausestoptimer", {
         email: sessionStorage.getItem("Mail"),
         stoptimer: pausestop.getTime(),
-      }).then((res)=> {
-        console.log(res.data.msg)
-
       });
 
     },
@@ -147,9 +131,6 @@ export default {
         email: sessionStorage.getItem("Mail"),
         datum: datum,
         starttime: pausetimestart.getTime(),
-      }).then((res)=> {
-        console.log(res.data.msg)
-
       });
 
     },
@@ -168,9 +149,6 @@ export default {
             datum: this.datum,
             starttime: this.timeBegan.getTime(),
 
-
-          }).then((res)=> {
-            console.log(res.data.msg)
 
           });
         }
@@ -196,9 +174,6 @@ export default {
           starttime: heute.getTime(),
 
 
-        }).then((res)=> {
-          console.log(res.data.msg)
-
         });
 
 
@@ -217,9 +192,6 @@ export default {
       axios.post("/api/stoptimer", {
         email: sessionStorage.getItem("Mail"),
         timer: this.timeStopped.getTime(),
-      }).then((res)=> {
-        console.log(res.data.msg)
-
       });
 
     },
@@ -229,9 +201,6 @@ export default {
         const heute = new Date();
         const monat = heute.getMonth() + 1
         this.datum = heute.getDate() + "." + monat + "." + heute.getFullYear();
-
-      } else {
-      console.log("test")
 
       }
     },

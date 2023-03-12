@@ -3,7 +3,7 @@ module.exports = {
     "port": 8080,
     "proxy": {
       "^/api": {
-        "target": "http://localhost:3000",
+        "target": "http://94.130.160.189:3000",
         "changeOrigin": true
       }
     }

@@ -109,8 +109,6 @@ export default {
 
 .dropdown-menu {
   position: absolute !important;
-  right: 0px !important;
-  left: unset !important
 }
 
 </style>

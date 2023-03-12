@@ -105,7 +105,6 @@ export default {
   methods: {
     canceledit: function (row) {
       row.item._showDetailss = true;
-      console.log(row.item._showDetailss);
     },
     saveuser: function (row) {
 
@@ -149,7 +148,6 @@ export default {
       }
     },
     edituser: function (row) {
-      console.log(row.item._showDetails)
         row.item._showDetailss = false;
 
         this.email = row.item.email;
@@ -175,11 +173,7 @@ export default {
     loaduserTabel: function(){
       axios.get("/api/loadusertabel").then((res) => {
         this.items = res.data.data;
-        console.log(this.items)
-      })
-          .catch(()=>{
-            console.log("Something Went Wrong");
-          })
+      });
     },
     removeuser : function (semail, id) {
       axios.post("/api/removeuser", {

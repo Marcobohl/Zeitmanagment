@@ -77,7 +77,6 @@ export default {
 
           this.items.length = 0
 
-          console.log(res)
           let dpause = res.data.pause.pause;
           let tagarbeziet = res.data.abzeit.abzeit;
 
@@ -85,7 +84,6 @@ export default {
           tagarbeziet = tagarbeziet * 60 * 60 * 1000;
           tagarbeziet = tagarbeziet / 5;
 
-          console.log(tagarbeziet);
           let arraystap = 0;
           //aktuelles datum
           const adateString = new Date();
@@ -204,10 +202,7 @@ export default {
 
           arraystap++;
         }
-      })
-          .catch(()=>{
-            console.log("Something Went Wrong");
-          })
+      });
     },
   }
 }

@@ -48,15 +48,10 @@ export default {
   },
     methods: {
       passwordrest() {
-        const data = {
-          email: this.email
-        }
-        console.log(data)
 
         axios.post("/api/reset", {
           email: this.email,
         }).then((res)=> {
-          console.log(res.data.msg)
 
 
           if (res.data.msg === "TMS:1004"){
